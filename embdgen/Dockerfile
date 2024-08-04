@@ -31,12 +31,17 @@ RUN pip install -e embdgen-core
 RUN pip install -e embdgen-cominit
 RUN pip install -e embdgen-config-yaml
 
-# Install EBcL build helpers
-RUN pip install jsonpickle
-
 # Add apt keys
 RUN mkdir -p /build/keys
 COPY conf/elektrobit.pub /build/keys/
+
+# Install EBcL build helpers
+RUN pip install jsonpickle robotframework requests pyyaml
+
+# Install EBcl build tools
+WORKDIR /build
+RUN git clone --branch devel https://github.com/Elektrobit/ebcl_build_tools ebcl_build_tools
+RUN pip install -e ebcl_build_tools
 
 WORKDIR /workspace
 
