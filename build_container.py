@@ -86,7 +86,14 @@ class ContainerBuilder:
         repo = self.config['Repository']
         basename = self.config['Base-Name']
         name = os.path.basename(path)
-        version = self.config['Version']
+        version = self.config.get('Version', 'devel')
+
+        env_version = os.getenv('CONTAINER_TAG', None)
+        if env_version:
+            logging.info('Using container tag %s form env version.',
+                         env_version)
+            version = env_version
+
         return f'{repo}/{basename}_{name}:{version}'
 
     def build_container(self, uid: Optional[int], gid: Optional[int]):
