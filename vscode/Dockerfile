@@ -2,6 +2,7 @@ ARG BASE_CONTAINER_NAME="ubuntu:22.04"
 FROM $BASE_CONTAINER_NAME
 
 ARG CONTAINER_USER="ebcl"
+ARG TIMESTAMP="unknown"
 
 # "Activate" Python env
 ENV VIRTUAL_ENV=/build/venv
