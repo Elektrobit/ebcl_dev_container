@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """ Script to build the EBcL SDK container. """
 import argparse
-import os
 import logging
+import os
 import subprocess
+import time
 
 from typing import Any, Optional
 
@@ -62,6 +63,7 @@ class ContainerBuilder:
             f'--build-arg BASE_CONTAINER_NAME="{self.base_container_name}" '\
             f'--build-arg HOST_USER="{uid}" '\
             f'--build-arg HOST_GROUP="{gid}" '\
+            f'--build-arg TIMESTAMP="{time.time()}" '\
             f'{path}'
         logging.debug('Command: %s', command)
         subprocess.run(command, shell=True, check=True)

@@ -2,6 +2,7 @@ ARG BASE_CONTAINER_NAME="ubuntu:22.04"
 FROM $BASE_CONTAINER_NAME
 
 ARG CONTAINER_USER="ebcl"
+ARG TIMESTAMP="unknown"
 
 # "Activate" Python env
 ENV VIRTUAL_ENV=/build/venv
@@ -40,7 +41,8 @@ RUN pip install jsonpickle robotframework requests pyyaml
 
 # Install EBcl build tools
 WORKDIR /build
-RUN git clone --branch devel https://github.com/Elektrobit/ebcl_build_tools ebcl_build_tools
+# timestamp forces re-run of command
+RUN TIMESTAMP=${TIMESTAMP} git clone --branch devel https://github.com/Elektrobit/ebcl_build_tools ebcl_build_tools
 RUN pip install -e ebcl_build_tools
 
 WORKDIR /workspace
