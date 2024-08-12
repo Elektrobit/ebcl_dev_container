@@ -14,6 +14,8 @@ WORKDIR /build
 RUN TIMESTAMP=${TIMESTAMP} git clone --branch devel https://github.com/Elektrobit/ebcl_vscode_tools.git ebcl_vscode_tools
 RUN pip install -e ebcl_vscode_tools
 
+RUN pip install libtmux
+
 WORKDIR /workspace
 
 # Set the entry point
