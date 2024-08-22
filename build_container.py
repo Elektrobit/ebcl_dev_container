@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 """ Script to build the EBcL SDK container. """
 import argparse
-import os
 import logging
+import os
 import subprocess
+import time
 
 from typing import Any, Optional
 
@@ -62,6 +63,7 @@ class ContainerBuilder:
             f'--build-arg BASE_CONTAINER_NAME="{self.base_container_name}" '\
             f'--build-arg HOST_USER="{uid}" '\
             f'--build-arg HOST_GROUP="{gid}" '\
+            f'--build-arg TIMESTAMP="{time.time()}" '\
             f'{path}'
         logging.debug('Command: %s', command)
         subprocess.run(command, shell=True, check=True)
@@ -86,7 +88,14 @@ class ContainerBuilder:
         repo = self.config['Repository']
         basename = self.config['Base-Name']
         name = os.path.basename(path)
-        version = self.config['Version']
+        version = self.config.get('Version', 'devel')
+
+        env_version = os.getenv('CONTAINER_TAG', None)
+        if env_version:
+            logging.info('Using container tag %s form env version.',
+                         env_version)
+            version = env_version
+
         return f'{repo}/{basename}_{name}:{version}'
 
     def build_container(self, uid: Optional[int], gid: Optional[int]):

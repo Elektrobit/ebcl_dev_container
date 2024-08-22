@@ -1,7 +1,7 @@
 Base-Name: sdk
 Repository: linux.elektrobit.com/ebcl
 Base-Container: ubuntu:22.04
-Version: testing
+Version: devel
 Layers:
   - base
   - pbuilder
@@ -10,3 +10,4 @@ Layers:
   - elbe
   - appdev
   - embdgen
+  - vscode
