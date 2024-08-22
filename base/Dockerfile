@@ -81,7 +81,7 @@ RUN chown -R $CONTAINER_USER:$CONTAINER_USER /build/bin && \
     chmod +x /build/bin/*
 
 # Write version
-RUN echo "1.3" > /etc/sdk_version
+RUN echo "1.3.2" > /etc/sdk_version
 
 USER $CONTAINER_USER
 
