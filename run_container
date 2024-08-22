@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="testing"
+VERSION="v1.3.2"
 
 if [ -z $RUNNER ]; then
     # docker or podman
@@ -64,7 +64,7 @@ if [ ! -z "$@" ]; then
         -v ${SYSROOT_ARM}:/build/sysroot_aarch64:ro \
         -v /dev:/dev \
         --privileged \
-        linux.elektrobit.com/ebcl/sdk:testing
+        linux.elektrobit.com/ebcl/sdk:${VERSION}
 else
     $RUNNER run --rm -it \
         --name $CONTAINER_NAME \
@@ -79,5 +79,5 @@ else
         -v ${SYSROOT_ARM}:/build/sysroot_aarch64:ro \
         -v /dev:/dev \
         --privileged \
-        linux.elektrobit.com/ebcl/sdk:testing
+        linux.elektrobit.com/ebcl/sdk:${VERSION}
 fi
