@@ -26,7 +26,7 @@ USER $CONTAINER_USER
 WORKDIR /build
 
 # Install berrymill
-RUN pip install kiwi kiwi-boxed-plugin
+RUN pip install kiwi==10.1.2 kiwi-boxed-plugin==0.2.36
 RUN pip install 'berrymill @ git+https://github.com/tomirgang/berrymill.git@59dbfd7d022681402ef5d4758e4e146411f1cad6'
 
 # copy apt helper scripts
