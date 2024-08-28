@@ -15,3 +15,5 @@ set(CMAKE_CXX_FLAGS "--sysroot /build/sysroot_x86_64/")
 set(ENV{PKG_CONFIG_DIR} "")
 set(ENV{PKG_CONFIG_LIBDIR} "${CMAKE_FIND_ROOT_PATH}/usr/lib/x86_64-linux-gnu/pkgconfig/:${CMAKE_FIND_ROOT_PATH}/usr/share/pkgconfig")
 set(ENV{PKG_CONFIG_SYSROOT_DIR} ${CMAKE_FIND_ROOT_PATH})
+
+set(CMAKE_INSTALL_PREFIX "/usr")
