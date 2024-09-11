@@ -1,7 +1,7 @@
 Base-Name: sdk
 Repository: linux.elektrobit.com/ebcl
 Base-Container: ubuntu:22.04
-Version: v1.3.3
+Version: v1.3.4
 Layers:
   - base
   - pbuilder
