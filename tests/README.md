@@ -8,7 +8,7 @@ To prepare the test environment, change to the root folder of this repository an
 
 - prepare a Python environment: `python3 -m venv .venv`
 - activate the environment: `source .venv/bin/activate`
-- install the dependencies: `pip install -r requirements.txt`
+- install the dependencies: `pip install -r requirements.txt` and `pip install -r tests/requirements.txt`
 
 ## Run the tests
 
