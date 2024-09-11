@@ -12,9 +12,9 @@ class Appdev:
         run_command('rm -rf /build/results/apps/my-json-app_x86_64*')
         # build image
         run_command('cmake_x86_64 my-json-app')
-        (lines, _stdout, _stderr) = run_command('file /build/results/apps/my-json-app_x86_64_*/MyJsonApp')
+        (lines, _stdout, _stderr) = run_command('file /build/results/apps/my-json-app/qemu-x86_64/build/install/usr/bin/MyJsonApp')
         assert 'ELF 64-bit LSB pie executable, x86-64' in lines[-2]
-        (lines, _stdout, _stderr) = run_command('file /workspace/results/apps/my-json-app_x86_64_*/MyJsonApp')
+        (lines, _stdout, _stderr) = run_command('file /workspace/results/apps/my-json-app/qemu-x86_64/build/install/usr/bin/MyJsonApp')
         assert 'ELF 64-bit LSB pie executable, x86-64' in lines[-2]
 
     def cmake_app_aarch64(self):
@@ -27,7 +27,7 @@ class Appdev:
         run_command('rm -rf /build/results/apps/my-json-app_aarch64*')
         # build image
         run_command('cmake_aarch64 my-json-app')
-        (lines, _stdout, _stderr) = run_command('file /build/results/apps/my-json-app_aarch64_*/MyJsonApp')
+        (lines, _stdout, _stderr) = run_command('file /build/results/apps/my-json-app/qemu-aarch64/build/install/usr/bin/MyJsonApp')
         assert 'ELF 64-bit LSB pie executable, ARM aarch64' in lines[-2]
-        (lines, _stdout, _stderr) = run_command('file /workspace/results/apps/my-json-app_aarch64_*/MyJsonApp')
+        (lines, _stdout, _stderr) = run_command('file /workspace/results/apps/my-json-app/qemu-aarch64/build/install/usr/bin/MyJsonApp')
         assert 'ELF 64-bit LSB pie executable, ARM aarch64' in lines[-2]

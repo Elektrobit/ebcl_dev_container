@@ -13,14 +13,6 @@ if [[ "${APP_FOLDER}" != "/"* ]]; then
     fi
 fi
 
-APP_NAME=$(basename $APP_FOLDER)
-
-DATE=$(date '+%Y-%m-%d_%H-%M-%S')
-FOLDER="/build/results/apps/${APP_NAME}_aarch64_${DATE}"
-
-mkdir -p ${FOLDER}
-
-# rebuild cmake and build app
-cmake --toolchain /build/cmake/toolchain-aarch64.cmake -B "${FOLDER}" -S "${APP_FOLDER}"
-cd ${FOLDER}
-make
+pushd $APP_FOLDER
+cmake --preset qemu-aarch64 && cmake --build --preset qemu-aarch64
+popd
