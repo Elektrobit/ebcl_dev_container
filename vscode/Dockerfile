@@ -9,7 +9,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Install EBcl build tools
 WORKDIR /build
-RUN git clone --branch v1.0.0 https://github.com/Elektrobit/ebcl_vscode_tools.git ebcl_vscode_tools
+RUN git clone --branch v1.0.1 https://github.com/Elektrobit/ebcl_vscode_tools.git ebcl_vscode_tools
 RUN pip install -e ebcl_vscode_tools
 
 RUN pip install libtmux

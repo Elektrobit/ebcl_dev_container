@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="v1.3.5"
+VERSION="v1.3.6"
 
 if [ -z $RUNNER ]; then
     # docker or podman
