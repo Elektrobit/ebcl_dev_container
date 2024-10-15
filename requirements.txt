@@ -1,2 +1,4 @@
-pyyaml
-types-PyYAML
+docker==7.1.0
+PyYAML==6.0.2
+robotframework==7.1
+types-PyYAML==6.0.12.20240917
