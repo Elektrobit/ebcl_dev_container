@@ -1,0 +1,11 @@
+#!/bin/bash
+
+VERSION="v1.3.7"
+NAME="container_export"
+
+set -e
+
+docker run --name "${NAME}"  "linux.elektrobit.com/ebcl/sdk_vscode:${VERSION}"
+docker export "${NAME}" | xz > "ebcl_dev_container_${VERSION}.tar.xz"
+docker stop "${NAME}"
+docker rm "${NAME}"
