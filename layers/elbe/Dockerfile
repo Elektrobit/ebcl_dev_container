@@ -61,8 +61,3 @@ RUN bash -c "pip install -e /var/cache/elbe/devel"
 # init elbe db
 # PYTHONPATH is hack to make python3-apt available in the venv. The package is not maintained on Pipy and only avalable as deb
 RUN bash -c "source /build/venv/bin/activate; PYTHONPATH=$PYTHONPATH:/usr/lib/python3/dist-packages/ elbe db init"
-
-WORKDIR /workspace
-
-# Set the entry point
-ENTRYPOINT ["/build/bin/init"]

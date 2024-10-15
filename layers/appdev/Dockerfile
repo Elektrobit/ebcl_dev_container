@@ -26,9 +26,3 @@ COPY scripts/cmake/* /build/bin/
 
 # Result folder for cmake builds
 RUN mkdir -p /build/results/apps
-
-# change work dir to workspace mount point
-WORKDIR /workspace
-
-# Set the entry point
-ENTRYPOINT ["/build/bin/init"]

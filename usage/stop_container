@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -z $RUNNER ]; then
+    # docker or podman
+    RUNNER="docker"
+fi
+
+echo "RUNNER: ${RUNNER}"
+
+$RUNNER stop ebcl_sdk

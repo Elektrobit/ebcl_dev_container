@@ -13,8 +13,3 @@ RUN git clone --branch v1.0.1 https://github.com/Elektrobit/ebcl_vscode_tools.gi
 RUN pip install -e ebcl_vscode_tools
 
 RUN pip install libtmux
-
-WORKDIR /workspace
-
-# Set the entry point
-ENTRYPOINT ["/build/bin/init"]

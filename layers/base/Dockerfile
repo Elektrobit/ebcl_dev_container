@@ -4,6 +4,7 @@ FROM $BASE_CONTAINER_NAME
 ARG CONTAINER_USER="ebcl"
 ARG HOST_USER=1000
 ARG HOST_GROUP=1000
+ARG VERSION="unknown"
 
 # Config apt sources
 RUN rm -rf /etc/apt/sources.list
@@ -89,7 +90,7 @@ RUN chown -R $CONTAINER_USER:$CONTAINER_USER /build/bin && \
     chmod +x /build/bin/*
 
 # Write version
-RUN echo "1.3.7" > /etc/sdk_version
+RUN echo $VERSION > /etc/sdk_version
 
 USER $CONTAINER_USER
 
@@ -103,11 +104,3 @@ RUN pip install mypy pep8 pylint pytest pytest-cov robotframework
 # Ensure venv owner
 USER root
 RUN chown -R $CONTAINER_USER:$CONTAINER_USER /build/venv
-
-USER $CONTAINER_USER
-
-# change work dir to workspace mount point
-WORKDIR /workspace
-
-# Set the entry point
-ENTRYPOINT ["/build/bin/init"]

@@ -45,8 +45,3 @@ RUN pip install -e ebcl_build_tools
 # Prepare cache folders
 RUN mkdir -p /workspace/state/cache
 RUN mkdir -p /workspace/state/apt
-
-WORKDIR /workspace
-
-# Set the entry point
-ENTRYPOINT ["/build/bin/init"]

@@ -40,9 +40,3 @@ COPY scripts/gpg/* /build/bin/
 
 # copy kiwi helper scripts
 COPY scripts/kiwi/* /build/bin/
-
-# change work dir to workspace mount point
-WORKDIR /workspace
-
-# Set the entry point
-ENTRYPOINT ["/build/bin/init"]

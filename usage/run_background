@@ -39,11 +39,11 @@ echo "Stopping and deleting the container..."
 $RUNNER stop $CONTAINER_NAME 2>&1 1>/dev/null | true
 $RUNNER rm $CONTAINER_NAME 2>&1 1>/dev/null | true
 
-echo "Running the container..."
-$RUNNER run --rm -it \
+echo "Running the container as background process..."
+$RUNNER run \
     --name $CONTAINER_NAME \
     -u ebcl \
     -v ${HOME}/.ssh:/home/ebcl/.ssh:ro \
     -v /dev:/dev \
     --privileged \
-    linux.elektrobit.com/ebcl/sdk:${VERSION}
+    linux.elektrobit.com/ebcl/sdk:${VERSION} sleep infinity &

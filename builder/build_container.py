@@ -24,6 +24,7 @@ class ContainerBuilder:
         self.base_container_name: Optional[str] = None
         self.uid = None
         self.gid = None
+        self.version = 'unknown'
 
     def load_config(self, file: Optional[str]) -> None:
         """ Load container configuration from config file.
@@ -38,6 +39,9 @@ class ContainerBuilder:
         with open(file, 'r', encoding='utf-8') as f:
             self.config = yaml.safe_load(f)
         logging.info('Conifg: %s', self.config)
+        
+        if self.config:
+            self.version = self.config.get('Version', 'unknown')
 
     def _set_builder(self) -> None:
         """ Get the build tool form the environment. """
@@ -58,12 +62,13 @@ class ContainerBuilder:
         gid = 1000
         if self.gid:
             gid = self.gid
-
+        
         command = f'{self.build_tool} build -t {name} '\
             f'--build-arg BASE_CONTAINER_NAME="{self.base_container_name}" '\
             f'--build-arg HOST_USER="{uid}" '\
             f'--build-arg HOST_GROUP="{gid}" '\
             f'--build-arg TIMESTAMP="{time.time()}" '\
+            f'--build-arg VERSION="{self.version}" '\
             f'{path}'
         logging.debug('Command: %s', command)
         subprocess.run(command, shell=True, check=True)
@@ -88,7 +93,7 @@ class ContainerBuilder:
         repo = self.config['Repository']
         basename = self.config['Base-Name']
         name = os.path.basename(path)
-        version = self.config.get('Version', 'devel')
+        version = self.version
 
         env_version = os.getenv('CONTAINER_TAG', None)
         if env_version:
