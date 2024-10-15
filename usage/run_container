@@ -1,19 +1,30 @@
 #!/bin/bash
 
-VERSION="v1.3.7"
+GIT_ROOT=$(git rev-parse --show-toplevel)
+
+# Build the container.
+${GIT_ROOT}/builder/build_container
+
+if [ -z "$1" ]; then
+    VERSION=$(cat ../configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
+else
+    VERSION=$1
+fi
 
 if [ -z $RUNNER ]; then
     # docker or podman
     RUNNER="docker"
 fi
+
 echo "RUNNER: ${RUNNER}"
 
 if [ -z $CONTAINER_NAME ]; then
     CONTAINER_NAME="ebcl_sdk"
 fi
+
 echo "CONTAINER_NAME: ${CONTAINER_NAME}"
 
-lsmod | grep binfmt_misc
+lsmod | grep binfmt_misc > /dev/null
 if [ $? -ne 0 ]; then
     echo "Trying to load binfmt kernel module for cross-builds ..."
     sudo modprobe binfmt_misc
@@ -21,6 +32,7 @@ fi
 
 $RUNNER run --rm -it \
     --name $CONTAINER_NAME \
+    -u ebcl \
     -v ${HOME}/.ssh:/home/ebcl/.ssh:ro \
     -v /dev:/dev \
     --privileged \

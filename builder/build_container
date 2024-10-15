@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+cd $(dirname "${BASH_SOURCE[0]}")
+echo "Current directory: $PWD"
+
+GIT_ROOT=$(git rev-parse --show-toplevel)
+VENV_DIR="${GIT_ROOT}/.venv"
+
+if [[ ! -d $VENV_DIR ]]; then
+    echo "Preparing venv for container build tool..."
+    pushd .
+    cd $GIT_ROOT 
+    python3 -m venv .venv
+    popd
+fi
+
+source ${VENV_DIR}/bin/activate
+pip install -r ${GIT_ROOT}/requirements.txt
+
+echo "Building EBcL SDK dev container..."
+
+python build_container.py -c ${GIT_ROOT}/configuration/build_config.yaml
