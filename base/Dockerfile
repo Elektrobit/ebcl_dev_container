@@ -6,14 +6,15 @@ ARG HOST_USER=1000
 ARG HOST_GROUP=1000
 
 # Config apt sources
-RUN mkdir -p /etc/apt/sources.list.d
-COPY conf/apt/* /etc/apt/sources.list.d/
-RUN rm -rf /etc/apt/sources.list && \
-    touch /etc/apt/sources.list
+RUN rm -rf /etc/apt/sources.list
+COPY conf/apt/sources.list /etc/apt/sources.list
 
 # Copy linux.elektrobit.com repo key
 RUN mkdir -p /etc/apt/trusted.gpg.d
 COPY conf/apt-keys/elektrobit.gpg /etc/apt/trusted.gpg.d/
+
+# add arm64 arch for cross-building
+RUN dpkg --add-architecture arm64
 
 # Update container
 RUN apt update
@@ -25,7 +26,13 @@ RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y \
     python3 python3-pip python3-venv \
     lshw gdisk fdisk parted fakechroot fakeroot bmap-tools \ 
     tcpdump iputils-ping iproute2 iptables \
-    qemu-system-arm qemu-system-x86 qemu-kvm
+    qemu-system-arm qemu-system-x86 \
+    libc6:arm64 \
+    software-properties-common
+
+# add addon ppa
+RUN add-apt-repository ppa:elos-team/ppa
+RUN apt update
 
  # Setup locale
 RUN export LC_ALL=en_US.UTF-8 && \
@@ -34,6 +41,7 @@ RUN export LC_ALL=en_US.UTF-8 && \
 
 # Create build user mathching outside UID and GID to avoid ownership issues
 # and allow user to use sudo
+RUN userdel ubuntu || true
 RUN addgroup --gid $HOST_GROUP $CONTAINER_USER && \
   useradd -rm -d /home/$CONTAINER_USER -s /bin/bash -g $CONTAINER_USER -G sudo -u $HOST_USER $CONTAINER_USER && \
   echo "$CONTAINER_USER ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers && \
@@ -81,7 +89,7 @@ RUN chown -R $CONTAINER_USER:$CONTAINER_USER /build/bin && \
     chmod +x /build/bin/*
 
 # Write version
-RUN echo "1.3.2" > /etc/sdk_version
+RUN echo "1.3.7" > /etc/sdk_version
 
 USER $CONTAINER_USER
 

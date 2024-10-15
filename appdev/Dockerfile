@@ -7,7 +7,6 @@ USER root
 
 # install elbe dependencies
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt update
 RUN apt -y install libjsoncpp-dev
 
 # Update cmake version and install required tools

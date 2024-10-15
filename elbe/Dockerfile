@@ -9,15 +9,8 @@ ARG CONTAINER_USER="ebcl"
 
 USER root
 
-# add arm64 arch for cross-building
-RUN dpkg --add-architecture arm64
-RUN apt update
-RUN apt -y install libc6:arm64
-
 # install elbe dependencies
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt update
-RUN apt -y install \
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt -y install \
     openssh-server debootstrap reprepro python3 python3-pip python3-venv \
     binfmt-support qemu-user-static locales libparted-dev \
     cpio patchelf libgpgme-dev swig libvirt-dev python3-apt python3-parted \
