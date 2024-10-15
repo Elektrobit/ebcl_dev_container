@@ -6,6 +6,9 @@
 **/output.xml
 **/report.html
 
+/book
+/book/**/*
+
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,linux,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,windows,linux,python
 
