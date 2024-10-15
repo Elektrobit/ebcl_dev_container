@@ -1,0 +1,28 @@
+[book]
+authors = ["Elektrobit Automotive GmbH"]
+description = "EB corbos Linux container dev container."
+language = "en"
+multilingual = false
+src = "docs"
+title = "EB corbos Linux dev container"
+
+[build]
+create-missing = true
+
+[preprocessor.image-size]
+command = "mdbook-image-size"
+
+[output.html]
+additional-css = ["docs/custom.css"]
+curly-quotes = true
+mathjax-support = false
+copy-fonts = true
+git-repository-url = "https://github.com/Elektrobit/ebcl_dev_container/"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/Elektrobit/ebcl_dev_container/edit/main/{path}"
+input-404 = "not-found.md"
+
+[output.html.print]
+enable = true
+page-break = true
+
