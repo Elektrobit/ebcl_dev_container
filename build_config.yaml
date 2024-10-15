@@ -3,11 +3,11 @@ Repository: linux.elektrobit.com/ebcl
 Base-Container: ubuntu:22.04
 Version: v1.3.7
 Layers:
-  - base
-  - pbuilder
-  - rust
-  - kiwi
-  - elbe
-  - appdev
-  - embdgen
-  - vscode
+  - layers/base
+  - layers/pbuilder
+  - layers/rust
+  - layers/kiwi
+  - layers/elbe
+  - layers/appdev
+  - layers/embdgen
+  - layers/vscode
