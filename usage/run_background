@@ -70,4 +70,5 @@ $RUNNER run \
     -v ${WORKSPACE}:/workspace:rw \
     -v /dev:/dev \
     --privileged \
+    --init \
     linux.elektrobit.com/ebcl/sdk:${VERSION} sleep infinity &

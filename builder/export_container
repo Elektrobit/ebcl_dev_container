@@ -1,11 +1,33 @@
 #!/bin/bash
 
-VERSION="v1.3.7"
+if [ -z $RUNNER ]; then
+    # docker or podman
+    RUNNER="docker"
+fi
+
+echo "RUNNER: ${RUNNER}"
+
+GIT_ROOT=$(git rev-parse --show-toplevel)
+
+if [ -z "$1" ]; then
+    VERSION=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
+else
+    VERSION=$1
+fi
+
+echo "Exporting dev container ${VERSION}"
+
 NAME="container_export"
+
+echo "Stopping and deleting the container ${NAME}..."
+$RUNNER stop $NAME 2>&1 1>/dev/null | true
+$RUNNER rm $NAME 2>&1 1>/dev/null | true
+
+echo "Exporting the container ${NAME}..."
 
 set -e
 
-docker run --name "${NAME}"  "linux.elektrobit.com/ebcl/sdk_vscode:${VERSION}"
-docker export "${NAME}" | xz > "ebcl_dev_container_${VERSION}.tar.xz"
-docker stop "${NAME}"
-docker rm "${NAME}"
+$RUNNER run --name "${NAME}"  "linux.elektrobit.com/ebcl/sdk_vscode:${VERSION}"
+$RUNNER export "${NAME}" | xz > "ebcl_dev_container_${VERSION}.tar.xz"
+$RUNNER stop "${NAME}"
+$RUNNER rm "${NAME}"
