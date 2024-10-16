@@ -21,7 +21,6 @@ def cont_cmd(command, check=True):
         check=check
     )
 
-
 def run_container():
     """Run the SDK container."""
     cont_cmd('./run_background')

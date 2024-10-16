@@ -4,4 +4,4 @@ class Build:
     
     def build_containers(self):
         """Build the SDK containers."""
-        cont_cmd('python3 build_container.py')
+        cont_cmd('./../builder/build_container')

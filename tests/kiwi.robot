@@ -12,7 +12,7 @@ SDK shall provide Kiwi-ng and Berrymill
     Kiwi Is Available
     Berrymill Is Available
 
-SDK shall support a local apr repository
+SDK shall support a local apt repository
     [Tags]    fast
     Local Apt Repo
 
