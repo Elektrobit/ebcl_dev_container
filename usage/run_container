@@ -15,6 +15,27 @@ else
     VERSION=$1
 fi
 
+if [ -z "$IMAGES" ]; then
+    mkdir -p images
+    IMAGES="$PWD/images"
+fi
+
+echo "Using images from ${IMAGES}."
+
+if [ -z "$RESULTS" ]; then
+    mkdir -p results
+    RESULTS="$PWD/results"
+fi
+
+echo "Using ${RESULTS} as result folder."
+
+if [ -z "$WORKSPACE" ]; then
+    mkdir -p images
+    WORKSPACE=$PWD
+fi
+
+echo "Using workspace from ${WORKSPACE}."
+
 # Test if docker image is available
 if [ -z "$(docker images -q "linux.elektrobit.com/ebcl/sdk:${VERSION}")" ]; then
     # Build the container.
@@ -44,6 +65,9 @@ $RUNNER run --rm -it \
     --name $CONTAINER_NAME \
     -u ebcl \
     -v ${HOME}/.ssh:/home/ebcl/.ssh:ro \
+    -v ${RESULTS}:/build/results:rw \
+    -v ${IMAGES}:/build/images:rw \
+    -v ${WORKSPACE}:/workspace:rw \
     -v /dev:/dev \
     --privileged \
     linux.elektrobit.com/ebcl/sdk:${VERSION}
