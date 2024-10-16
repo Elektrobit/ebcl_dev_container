@@ -1,2 +1,0 @@
-libtmux==0.37.0
-robotframework==7.0.1

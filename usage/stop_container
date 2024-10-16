@@ -7,4 +7,4 @@ fi
 
 echo "RUNNER: ${RUNNER}"
 
-$RUNNER stop ebcl_sdk
+$RUNNER kill --signal=9 ebcl_sdk
