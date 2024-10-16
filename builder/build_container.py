@@ -62,16 +62,25 @@ class ContainerBuilder:
         gid = 1000
         if self.gid:
             gid = self.gid
-        
-        command = f'{self.build_tool} build -t {name} '\
-            f'--build-arg BASE_CONTAINER_NAME="{self.base_container_name}" '\
+
+
+        # Replace FROM with layer before.
+        command = f'echo "FROM {self.base_container_name}" > Dockerfile.tmp; ' \
+            'sed \'/FROM /d\' Dockerfile >> Dockerfile.tmp'
+        subprocess.run(command, shell=True, check=True, cwd=path)
+
+        # Build the container.
+        command = f'{self.build_tool} build -t {name} -f Dockerfile.tmp '\
             f'--build-arg HOST_USER="{uid}" '\
             f'--build-arg HOST_GROUP="{gid}" '\
             f'--build-arg TIMESTAMP="{time.time()}" '\
             f'--build-arg VERSION="{self.version}" '\
-            f'{path}'
+            f'.'
         logging.debug('Command: %s', command)
-        subprocess.run(command, shell=True, check=True)
+        subprocess.run(command, shell=True, check=True, cwd=path)
+
+        # Delete the temporary Dockerfile.
+        subprocess.run('rm Dockerfile.tmp', shell=True, check=True, cwd=path)
 
     def _tag_container(self) -> None:
         """ Tag a container. """

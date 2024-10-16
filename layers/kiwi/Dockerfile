@@ -1,9 +1,6 @@
-ARG BASE_CONTAINER_NAME="ubuntu:22.04"
-FROM $BASE_CONTAINER_NAME
+FROM ubuntu:latest
 
 ARG CONTAINER_USER="ebcl"
-
-# TODO: sysroot scripts and template
 
 # "Activate" Python env
 ENV VIRTUAL_ENV=/build/venv
