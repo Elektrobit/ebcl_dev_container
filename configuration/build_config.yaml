@@ -7,7 +7,6 @@ Layers:
   - ../layers/pbuilder
   - ../layers/rust
   - ../layers/kiwi
-  - ../layers/elbe
   - ../layers/appdev
   - ../layers/embdgen
   - ../layers/vscode
