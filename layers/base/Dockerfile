@@ -13,6 +13,10 @@ COPY conf/apt/sources.list /etc/apt/sources.list
 RUN mkdir -p /etc/apt/trusted.gpg.d
 COPY conf/apt-keys/elektrobit.gpg /etc/apt/trusted.gpg.d/
 
+# Copy linux.elektrobit.com repo config
+RUN mkdir -p /etc/apt/sources.list.d
+COPY conf/apt/elektrobit.list /etc/apt/sources.list.d/
+
 # add arm64 arch for cross-building
 RUN dpkg --add-architecture arm64
 
