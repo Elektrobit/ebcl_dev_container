@@ -15,4 +15,4 @@ set(ENV{PKG_CONFIG_DIR} "")
 set(ENV{PKG_CONFIG_LIBDIR} "${CMAKE_FIND_ROOT_PATH}/usr/lib/aarch64-linux-gnu/pkgconfig/:${CMAKE_FIND_ROOT_PATH}/usr/share/pkgconfig")
 set(ENV{PKG_CONFIG_SYSROOT_DIR} ${CMAKE_FIND_ROOT_PATH})
 
-set(CMAKE_INSTALL_PREFIX "/")
+set(CMAKE_INSTALL_PREFIX "/" CACHE STRING "Install prefix" FORCE)
