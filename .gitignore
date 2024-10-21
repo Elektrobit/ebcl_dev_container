@@ -6,6 +6,13 @@
 **/output.xml
 **/report.html
 
+/book
+/book/**/*
+
+/usage/images
+/usage/results
+/tests/image_build_tests/ebcl_template
+
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,windows,linux,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,windows,linux,python
 

@@ -1,3 +1,4 @@
+""" Test helpers. """
 import subprocess
 import os
 import docker
@@ -6,15 +7,19 @@ import docker.errors
 
 def cont_cmd(command, check=True):
     """Run shell command in container folder."""
-    workdir = os.path.abspath(os.path.join((os.path.abspath(__file__)), os.path.pardir, os.path.pardir, os.path.pardir, 'container'))
+    workdir = os.path.abspath(
+        os.path.join((os.path.abspath(__file__)),
+                      os.path.pardir,
+                      os.path.pardir,
+                      os.path.pardir,
+                      'usage'))
     print(f'WORKDIR: {workdir}')
     subprocess.run(
         command,
         cwd=workdir,
         shell=True,
         check=check
-    ) 
-
+    )
 
 def run_container():
     """Run the SDK container."""
@@ -23,7 +28,7 @@ def run_container():
     if 'RUNNER' not in os.environ or os.environ['RUNNER'] is None:
         # wait for the container to start
         client = docker.from_env()
-        while(True):
+        while True:
             try:
                 client.containers.get('ebcl_sdk')
                 break
@@ -40,27 +45,27 @@ def stop_container():
 
 
 def run_command(command, check=True, no_error=True):
-        """Exec command in SDK container."""
-        runner = 'docker'
-        if 'RUNNER' in os.environ:
-             runner = os.environ['RUNNER']
+    """Exec command in SDK container."""
+    runner = 'docker'
+    if 'RUNNER' in os.environ:
+        runner = os.environ['RUNNER']
 
-        result = subprocess.run(
-            f'{runner} exec -it ebcl_sdk bash -c "source ~/.bashrc; {command}"',
-            shell=True,
-            capture_output=True,
-            check=False
-        )
+    result = subprocess.run(
+        f'{runner} exec -it ebcl_sdk bash -c "source ~/.bashrc; {command}"',
+        shell=True,
+        capture_output=True,
+        check=False
+    )
 
-        stderr = result.stderr.decode('utf8')
-        stdout = result.stdout.decode('utf8')
+    stderr = result.stderr.decode('utf8')
+    stdout = result.stdout.decode('utf8')
 
-        if check:
-            assert result.returncode == 0
+    if check:
+        assert result.returncode == 0
 
-        lines = [line.strip() for line in stdout.split('\n')]
-        
-        if no_error:
-            assert stderr == ''
+    lines = [line.strip() for line in stdout.split('\n')]
 
-        return (lines, stdout, stderr)
+    if no_error:
+        assert stderr == ''
+
+    return (lines, stdout, stderr)

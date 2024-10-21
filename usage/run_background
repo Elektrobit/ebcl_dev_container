@@ -1,0 +1,74 @@
+#!/bin/bash
+
+if [ -z $RUNNER ]; then
+    # docker or podman
+    RUNNER="docker"
+fi
+
+echo "RUNNER: ${RUNNER}"
+
+GIT_ROOT=$(git rev-parse --show-toplevel)
+
+if [ -z "$1" ]; then
+    VERSION=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
+else
+    VERSION=$1
+fi
+
+if [ -z "$IMAGES" ]; then
+    mkdir -p images
+    IMAGES="$PWD/images"
+fi
+
+echo "Using images from ${IMAGES}."
+
+if [ -z "$RESULTS" ]; then
+    mkdir -p results
+    RESULTS="$PWD/results"
+fi
+
+echo "Using ${RESULTS} as result folder."
+
+if [ -z "$WORKSPACE" ]; then
+    mkdir -p images
+    WORKSPACE=$PWD
+fi
+
+echo "Using workspace from ${WORKSPACE}."
+
+# Test if docker image is available
+if [ -z "$(docker images -q "linux.elektrobit.com/ebcl/sdk:${VERSION}")" ]; then
+    # Build the container.
+    ${GIT_ROOT}/builder/build_container
+else
+    echo "Dev container image "linux.elektrobit.com/ebcl/sdk:${VERSION}" is available."
+fi
+
+if [ -z $CONTAINER_NAME ]; then
+    CONTAINER_NAME="ebcl_sdk"
+fi
+
+echo "CONTAINER_NAME: ${CONTAINER_NAME}"
+
+lsmod | grep binfmt_misc > /dev/null
+if [ $? -ne 0 ]; then
+    echo "Trying to load binfmt kernel module for cross-builds ..."
+    sudo modprobe binfmt_misc
+fi
+
+echo "Stopping and deleting the container..."
+$RUNNER stop $CONTAINER_NAME 2>&1 1>/dev/null | true
+$RUNNER rm $CONTAINER_NAME 2>&1 1>/dev/null | true
+
+echo "Running the container as background process..."
+$RUNNER run \
+    --name $CONTAINER_NAME \
+    -u ebcl \
+    -v ${HOME}/.ssh:/home/ebcl/.ssh:ro \
+    -v ${RESULTS}:/build/results:rw \
+    -v ${IMAGES}:/build/images:rw \
+    -v ${WORKSPACE}:/workspace:rw \
+    -v /dev:/dev \
+    --privileged \
+    --init \
+    linux.elektrobit.com/ebcl/sdk:${VERSION} sleep infinity &
