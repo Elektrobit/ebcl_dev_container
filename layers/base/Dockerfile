@@ -82,12 +82,6 @@ COPY scripts/bash/* /build/bin/
 # Copy GnuPG helper scripts
 COPY scripts/gpg/* /build/bin/
 
-# Copy QEMU helper scripts
-COPY scripts/qemu/* /build/bin/
-
-# Copy mount helper scripts
-COPY scripts/mount/* /build/bin/
-
 # Ensure correct attributes for scripts
 RUN chown -R $CONTAINER_USER:$CONTAINER_USER /build/bin && \
     chmod +x /build/bin/*
