@@ -61,11 +61,11 @@ def run_command(command, check=True, no_error=True):
     stdout = result.stdout.decode('utf8')
 
     if check:
-        assert result.returncode == 0
+        assert result.returncode == 0, (stdout, stderr)
 
     lines = [line.strip() for line in stdout.split('\n')]
 
     if no_error:
-        assert stderr == ''
+        assert stderr == '', stderr
 
     return (lines, stdout, stderr)
