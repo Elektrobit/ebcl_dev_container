@@ -4,8 +4,8 @@ import os
 class Base:
 
     def sdk_version(self, version: str):
-        (lines, _stdout, _stderr) = run_command('cat /etc/sdk_version')
-        assert version in lines[-2]
+        (lines, stdout, stderr) = run_command('cat /etc/sdk_version')
+        assert version in lines[-2], (stdout, stderr)
 
     def ensure_ebcl_user_is_used(self):
         (_lines, stdout, _stderr) = run_command('id')
