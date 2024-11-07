@@ -10,12 +10,12 @@ echo "RUNNER: ${RUNNER}"
 GIT_ROOT=$(git rev-parse --show-toplevel)
 
 if [ -z "$1" ]; then
-    VERSION=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
+    VERSION=$(yq .Version ${GIT_ROOT}/configuration/build_config.yaml)
 else
     VERSION=$1
 fi
-CONTAINER_NAME=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Base-Name: | awk -F " " '{print $2}')
-REPO_NAME=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Repository: | awk -F " " '{print $2}')
+CONTAINER_NAME=$(yq '.["Base-Name"]' ${GIT_ROOT}/configuration/build_config.yaml)
+REPO_NAME=$(yq .Repository ${GIT_ROOT}/configuration/build_config.yaml)
 CONTAINER_IMAGE="${REPO_NAME}/${CONTAINER_NAME}:${VERSION}"
 
 if [ -z "$IMAGES" ]; then
