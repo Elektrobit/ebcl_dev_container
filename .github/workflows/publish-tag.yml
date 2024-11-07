@@ -1,0 +1,11 @@
+name: Automated build, test and publish image for tag
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+jobs:
+  call-publish-tag:
+    uses: ./.github/workflows/manually-publish-tag.yml@main
+    with:
+      tag: ${{ github.ref_name }}
