@@ -1,14 +1,21 @@
-name: Build and publish image for tag
+name: Build, test and publish image for tag
 
 on:
   workflow_dispatch:
     inputs:
       tag:
+        type: string
+        description: "Existing tag to build and publish (e.g., v1.2.3)"
+        required: true
+  workflow_call:
+    inputs:
+      tag:
+        type: string
         description: "Existing tag to build and publish (e.g., v1.2.3)"
         required: true
 
 jobs:
-  build-and-publish:
+  build-test-publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +29,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.events.inputs.tag }}
+          ref: ${{ inputs.tag }}
 
       - name: Setup python
         uses: actions/setup-python@v5
@@ -33,4 +40,4 @@ jobs:
 
       - run: ./builder/build_container
       - run: ./tests/run_tests
-      # - run: ./builder/publish_container
+      - run: ./builder/publish_container
