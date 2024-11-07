@@ -51,7 +51,7 @@ def run_command(command, check=True, no_error=True):
         runner = os.environ['RUNNER']
 
     result = subprocess.run(
-        f'{runner} exec -it ebcl_dev_container bash -c "source ~/.bashrc; {command}"',
+        f'{runner} exec ebcl_dev_container bash -c "source ~/.bashrc; {command}"',
         shell=True,
         capture_output=True,
         check=False
