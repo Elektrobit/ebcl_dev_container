@@ -5,7 +5,36 @@ on:
     tags: ["v*.*.*"]
 
 jobs:
-  call-publish-tag:
-    uses: ./.github/workflows/manually-publish-tag.yml
-    with:
-      tag: ${{ github.ref_name }}
+  build-test-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Compare version and tag name
+        run: |
+          VERSION=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
+          TAG_NAME=$(echo "${{ github.ref_name }}" | sed 's/refs\/tags\///')
+          if [ "${VERSION}" != "${TAG_NAME}" ]; then
+            echo "Version in build_config.yaml (${VERSION}) does not match tag name (${TAG_NAME})"
+            exit 1
+          fi
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+
+      - run: ./builder/build_container
+      - run: ./tests/run_tests
+      - run: ./builder/publish_container
