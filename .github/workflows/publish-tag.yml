@@ -6,6 +6,6 @@ on:
 
 jobs:
   call-publish-tag:
-    uses: ./.github/workflows/manually-publish-tag.yml@main
+    uses: ./.github/workflows/manually-publish-tag.yml
     with:
       tag: ${{ github.ref_name }}
