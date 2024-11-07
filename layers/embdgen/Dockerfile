@@ -8,7 +8,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 USER root
 
-# install elbe dependencies
+# install dependencies
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt -y install \
     python3 python3-pip python3-venv libparted-dev python3-dev pkg-config \
