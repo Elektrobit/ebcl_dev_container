@@ -22,7 +22,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          ref: $${ github.events.inputs.tag }
+          ref: ${{ github.events.inputs.tag }}
 
       - name: Setup python
         uses: actions/setup-python@v5
@@ -32,4 +32,5 @@ jobs:
       - run: pip install -r requirements.txt
 
       - run: ./builder/build_container
-      - run: ./builder/publish_container
+      - run: ./tests/run_tests
+      # - run: ./builder/publish_container
