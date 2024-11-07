@@ -21,7 +21,7 @@ jobs:
 
       - name: Compare version and tag name
         run: |
-          VERSION=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
+          VERSION=$(cat configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
           TAG_NAME=$(echo "${{ github.ref_name }}" | sed 's/refs\/tags\///')
           if [ "${VERSION}" != "${TAG_NAME}" ]; then
             echo "Version in build_config.yaml (${VERSION}) does not match tag name (${TAG_NAME})"
