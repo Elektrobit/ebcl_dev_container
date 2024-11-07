@@ -7,4 +7,7 @@ fi
 
 echo "RUNNER: ${RUNNER}"
 
-$RUNNER kill --signal=9 ebcl_sdk
+GIT_ROOT=$(git rev-parse --show-toplevel)
+CONTAINER_NAME=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Base-Name: | awk -F " " '{print $2}')
+
+$RUNNER kill --signal=9 $CONTAINER_NAME

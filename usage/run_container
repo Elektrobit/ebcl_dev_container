@@ -14,6 +14,9 @@ if [ -z "$1" ]; then
 else
     VERSION=$1
 fi
+CONTAINER_NAME=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Base-Name: | awk -F " " '{print $2}')
+REPO_NAME=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Repository: | awk -F " " '{print $2}')
+CONTAINER_IMAGE="${REPO_NAME}/${CONTAINER_NAME}:${VERSION}"
 
 if [ -z "$IMAGES" ]; then
     mkdir -p images
@@ -37,15 +40,11 @@ fi
 echo "Using workspace from ${WORKSPACE}."
 
 # Test if docker image is available
-if [ -z "$(docker images -q "linux.elektrobit.com/ebcl/sdk:${VERSION}")" ]; then
+if [ -z "$(docker images -q ${CONTAINER_IMAGE})" ]; then
     # Build the container.
     ${GIT_ROOT}/builder/build_container
 else
-    echo "Dev container image "linux.elektrobit.com/ebcl/sdk:${VERSION}" is available."
-fi
-
-if [ -z $CONTAINER_NAME ]; then
-    CONTAINER_NAME="ebcl_sdk"
+    echo "Dev container image ${CONTAINER_IMAGE} is available."
 fi
 
 echo "CONTAINER_NAME: ${CONTAINER_NAME}"
@@ -71,4 +70,4 @@ $RUNNER run --rm -it \
     -v /dev:/dev \
     --privileged \
     --init \
-    linux.elektrobit.com/ebcl/sdk:${VERSION}
+    ${CONTAINER_IMAGE}

@@ -17,19 +17,7 @@ fi
 CONTAINER_NAME=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Base-Name: | awk -F " " '{print $2}')
 REPO_NAME=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Repository: | awk -F " " '{print $2}')
 
-echo "Exporting dev container ${VERSION}"
-
-NAME="container_export"
-
-echo "Stopping and deleting the container ${NAME}..."
-$RUNNER stop $NAME 2>&1 1>/dev/null | true
-$RUNNER rm $NAME 2>&1 1>/dev/null | true
-
-echo "Exporting the container ${NAME}..."
+echo "Publishing dev container ${VERSION}"
 
 set -e
-
-$RUNNER run --name "${NAME}" "${REPO_NAME}/${CONTAINER_NAME}:${VERSION}"
-$RUNNER export "${NAME}" | xz -T0 >"${CONTAINER_NAME}_${VERSION}.tar.xz"
-$RUNNER stop "${NAME}"
-$RUNNER rm "${NAME}"
+$RUNNER push "${REPO_NAME}/${CONTAINER_NAME}:${VERSION}"
