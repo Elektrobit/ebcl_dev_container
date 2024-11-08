@@ -4,7 +4,7 @@ ARG CONTAINER_USER="ebcl"
 
 USER root
 
-# install elbe dependencies
+# install dependencies
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt -y install libjsoncpp-dev
 

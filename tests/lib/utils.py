@@ -30,7 +30,7 @@ def run_container():
         client = docker.from_env()
         while True:
             try:
-                client.containers.get('ebcl_sdk')
+                client.containers.get('ebcl_dev_container')
                 break
             except docker.errors.NotFound:
                 pass
@@ -51,7 +51,7 @@ def run_command(command, check=True, no_error=True):
         runner = os.environ['RUNNER']
 
     result = subprocess.run(
-        f'{runner} exec -it ebcl_sdk bash -c "source ~/.bashrc; {command}"',
+        f'{runner} exec ebcl_dev_container bash -c "source ~/.bashrc; {command}"',
         shell=True,
         capture_output=True,
         check=False
@@ -61,11 +61,11 @@ def run_command(command, check=True, no_error=True):
     stdout = result.stdout.decode('utf8')
 
     if check:
-        assert result.returncode == 0
+        assert result.returncode == 0, (stdout, stderr)
 
     lines = [line.strip() for line in stdout.split('\n')]
 
     if no_error:
-        assert stderr == ''
+        assert stderr == '', stderr
 
     return (lines, stdout, stderr)

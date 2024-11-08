@@ -12,12 +12,13 @@ echo "RUNNER: ${RUNNER}"
 
 GIT_ROOT=$(git rev-parse --show-toplevel)
 VENV_DIR="${GIT_ROOT}/.venv"
-VERSION=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
+VERSION=$(yq -r .Version ${GIT_ROOT}/configuration/build_config.yaml)
+CONTAINER_NAME=$(yq -r '.["Base-Name"]' ${GIT_ROOT}/configuration/build_config.yaml)
 
 if [[ ! -d $VENV_DIR ]]; then
     echo "Preparing venv for the tests..."
     pushd .
-    cd $GIT_ROOT 
+    cd $GIT_ROOT
     python3 -m venv .venv
     popd
 fi
@@ -41,16 +42,16 @@ ${GIT_ROOT}/usage/run_background
 
 sleep 5
 
-$RUNNER ps | grep ebcl_sdk
+$RUNNER ps | grep ${CONTAINER_NAME}
 
 echo "Executing the tests..."
 
-${RUNNER} exec ebcl_sdk bash -c 'cd /workspace/robot_tests; echo "PWD: $PWD"; robot images.robot'
+${RUNNER} exec ${CONTAINER_NAME} bash -c 'cd /workspace/robot_tests; echo "PWD: $PWD"; robot images.robot'
 
 echo "Copying the test result..."
 
-${RUNNER} exec ebcl_sdk bash -c 'cp /workspace/robot_tests/*.html /build/results/'
-${RUNNER} exec ebcl_sdk bash -c 'cp /workspace/robot_tests/output.xml /build/results/'
+${RUNNER} exec ${CONTAINER_NAME} bash -c 'cp /workspace/robot_tests/*.html /build/results/'
+${RUNNER} exec ${CONTAINER_NAME} bash -c 'cp /workspace/robot_tests/output.xml /build/results/'
 
 echo "Stopping the container..."
 

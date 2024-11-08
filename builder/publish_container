@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ -z $RUNNER ]; then
+    # docker or podman
+    RUNNER="docker"
+fi
+
+echo "RUNNER: ${RUNNER}"
+
+GIT_ROOT=$(git rev-parse --show-toplevel)
+
+VERSION=${1:-$(yq -r .Version ${GIT_ROOT}/configuration/build_config.yaml)}
+CONTAINER_NAME=$(yq -r '.["Base-Name"]' ${GIT_ROOT}/configuration/build_config.yaml)
+REPO_NAME=$(yq -r .Repository ${GIT_ROOT}/configuration/build_config.yaml)
+
+echo "Publishing dev container ${VERSION}"
+
+set -e
+$RUNNER push "${REPO_NAME}/${CONTAINER_NAME}:${VERSION}"

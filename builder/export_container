@@ -9,11 +9,9 @@ echo "RUNNER: ${RUNNER}"
 
 GIT_ROOT=$(git rev-parse --show-toplevel)
 
-if [ -z "$1" ]; then
-    VERSION=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
-else
-    VERSION=$1
-fi
+VERSION=${1:-$(yq -r .Version ${GIT_ROOT}/configuration/build_config.yaml)}
+CONTAINER_NAME=$(yq -r '.["Base-Name"]' ${GIT_ROOT}/configuration/build_config.yaml)
+REPO_NAME=$(yq -r .Repository ${GIT_ROOT}/configuration/build_config.yaml)
 
 echo "Exporting dev container ${VERSION}"
 
@@ -27,7 +25,7 @@ echo "Exporting the container ${NAME}..."
 
 set -e
 
-$RUNNER run --name "${NAME}"  "linux.elektrobit.com/ebcl/sdk_vscode:${VERSION}"
-$RUNNER export "${NAME}" | xz > "ebcl_dev_container_${VERSION}.tar.xz"
+$RUNNER run --name "${NAME}" "${REPO_NAME}/${CONTAINER_NAME}:${VERSION}"
+$RUNNER export "${NAME}" | xz -T0 >"${CONTAINER_NAME}_${VERSION}.tar.xz"
 $RUNNER stop "${NAME}"
 $RUNNER rm "${NAME}"
