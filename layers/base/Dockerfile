@@ -32,7 +32,8 @@ RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y \
     tcpdump iputils-ping iproute2 iptables \
     qemu-system-arm qemu-system-x86 \
     libc6:arm64 \
-    software-properties-common ca-certificates
+    software-properties-common ca-certificates \
+    psmisc procps
 
 # add addon ppa
 RUN add-apt-repository ppa:elos-team/ppa
