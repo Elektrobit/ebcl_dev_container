@@ -9,13 +9,9 @@ echo "RUNNER: ${RUNNER}"
 
 GIT_ROOT=$(git rev-parse --show-toplevel)
 
-if [ -z "$1" ]; then
-    VERSION=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
-else
-    VERSION=$1
-fi
-CONTAINER_NAME=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Base-Name: | awk -F " " '{print $2}')
-REPO_NAME=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Repository: | awk -F " " '{print $2}')
+VERSION=${1:-$(yq -r .Version ${GIT_ROOT}/configuration/build_config.yaml)}
+CONTAINER_NAME=$(yq -r '.["Base-Name"]' ${GIT_ROOT}/configuration/build_config.yaml)
+REPO_NAME=$(yq -r .Repository ${GIT_ROOT}/configuration/build_config.yaml)
 
 echo "Exporting dev container ${VERSION}"
 

@@ -7,7 +7,7 @@ echo "Current directory: $PWD"
 
 GIT_ROOT=$(git rev-parse --show-toplevel)
 VENV_DIR="${GIT_ROOT}/.venv"
-VERSION=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Version: | awk -F " " '{print $2}')
+VERSION=$(yq -r .Version ${GIT_ROOT}/configuration/build_config.yaml)
 
 if [[ ! -d $VENV_DIR ]]; then
     echo "Preparing venv for the tests..."

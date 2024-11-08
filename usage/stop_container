@@ -8,6 +8,6 @@ fi
 echo "RUNNER: ${RUNNER}"
 
 GIT_ROOT=$(git rev-parse --show-toplevel)
-CONTAINER_NAME=$(cat ${GIT_ROOT}/configuration/build_config.yaml | grep Base-Name: | awk -F " " '{print $2}')
+CONTAINER_NAME=$(yq -r '.["Base-Name"]' ${GIT_ROOT}/configuration/build_config.yaml)
 
 $RUNNER kill --signal=9 $CONTAINER_NAME
