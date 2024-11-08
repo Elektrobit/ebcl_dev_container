@@ -9,7 +9,7 @@ Keyword Tags    base
 
 SDK version shall match the container version
     [Tags]    fast
-    Sdk Version    v1.3.10
+    Sdk Version    v1.3.11
 
 SDK user shall be ebcl
     [Tags]    fast
