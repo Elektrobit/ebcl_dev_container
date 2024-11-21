@@ -10,4 +10,5 @@ Layers:
   - ../layers/appdev
   - ../layers/embdgen
   - ../layers/vscode
+  - ../layers/ebclfsa
   - ../layers/squash
