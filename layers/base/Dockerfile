@@ -35,11 +35,12 @@ RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y \
     software-properties-common ca-certificates \
     psmisc procps
 
+RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/bin
 # add addon ppa
 RUN add-apt-repository ppa:elos-team/ppa
 RUN apt update
 
- # Setup locale
+# Setup locale
 RUN export LC_ALL=en_US.UTF-8 && \
     export LANG=en_US.UTF-8 && \
     locale-gen en_US.UTF-8
