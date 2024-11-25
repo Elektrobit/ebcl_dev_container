@@ -1,0 +1,51 @@
+{
+    "version": 4,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 23
+    },
+    "configurePresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "generator": "Unix Makefiles",
+            "environment": {
+                "BUILDDIR": "/build/results/apps/$env{APP_NAME}/${presetName}/build",
+                "DESTDIR": "$env{BUILDDIR}/install"
+            },
+            "binaryDir": "$env{BUILDDIR}",
+            "cacheVariables": {
+                "CMAKE_EXPORT_COMPILE_COMMANDS": {
+                    "type": "BOOL",
+                    "value": "TRUE"
+                },
+                "CMAKE_BUILD_TYPE": {
+                    "type": "STRING",
+                    "value": "Debug"
+                }
+            }
+        },
+        {
+            "name": "ebcl-x86_64",
+            "hidden": true,
+            "inherits": "base",
+            "toolchainFile": "/build/cmake/toolchain-x86_64.cmake"
+        },
+        {
+            "name": "ebcl-aarch64",
+            "hidden": true,
+            "inherits": "base",
+            "toolchainFile": "/build/cmake/toolchain-aarch64.cmake"
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "base",
+            "hidden": true,
+            "jobs": 8,
+            "targets" : [
+                "install"
+            ]
+        }
+    ]
+}
