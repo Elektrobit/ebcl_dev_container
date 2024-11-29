@@ -10,3 +10,4 @@ Layers:
   - ../layers/appdev
   - ../layers/embdgen
   - ../layers/vscode
+  - ../layers/squash

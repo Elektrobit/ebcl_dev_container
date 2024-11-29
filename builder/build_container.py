@@ -64,9 +64,9 @@ class ContainerBuilder:
             gid = self.gid
 
 
-        # Replace FROM with layer before.
-        command = f'echo "FROM {self.base_container_name}" > Dockerfile.tmp; ' \
-            'sed \'/FROM /d\' Dockerfile >> Dockerfile.tmp'
+        # Replace first FROM with previous layer.
+        command = f'echo "FROM {self.base_container_name} as base_container_name" > Dockerfile.tmp; ' \
+            'sed \'0,/FROM /{/FROM /d;}\' Dockerfile >> Dockerfile.tmp'
         subprocess.run(command, shell=True, check=True, cwd=path)
 
         # Build the container.
