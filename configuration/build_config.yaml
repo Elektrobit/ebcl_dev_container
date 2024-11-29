@@ -2,6 +2,7 @@ Base-Name: ebcl_dev_container
 Repository: ghcr.io/elektrobit
 Base-Container: ubuntu:22.04
 Version: v1.4.3
+Squash: true
 Layers:
   - ../layers/base
   - ../layers/pbuilder
@@ -10,4 +11,3 @@ Layers:
   - ../layers/appdev
   - ../layers/embdgen
   - ../layers/vscode
-  - ../layers/squash

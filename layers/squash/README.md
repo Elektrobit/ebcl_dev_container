@@ -1,1 +1,0 @@
-# EBcL SDK: Squash layer
