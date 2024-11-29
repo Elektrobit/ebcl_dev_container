@@ -1,5 +1,5 @@
-ARG BASE_CONTAINER_NAME="ubuntu:22.04"
-FROM $BASE_CONTAINER_NAME as source 
+FROM ubuntu:latest as base_container_name 
 
+# intentionally lower case 'from' to avoid rewrite by the build script
 FROM scratch
-COPY --from=source / /
+COPY --from=base_container_name / /
