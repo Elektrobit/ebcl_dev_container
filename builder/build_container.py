@@ -51,7 +51,7 @@ class ContainerBuilder:
             self.build_tool = 'docker'
         logging.info('Builder: %s', self.build_tool)
 
-    def _build_container(self, name: str, path: str, squash = False) -> None:
+    def _build_container(self, name: str, path: str) -> None:
         """ Build a container layer. """
         logging.info('Building layer %s.', name)
 
@@ -63,17 +63,10 @@ class ContainerBuilder:
         if self.gid:
             gid = self.gid
 
-        if squash == True:
-            dockerfile_prefix = f'echo "FROM {self.base_container_name} as source" > Dockerfile.tmp; ' \
-                'echo "FROM scratch" >> Dockerfile.tmp; ' \
-                'echo "COPY --from=source / /" >> Dockerfile.tmp; '
-        else:
-            dockerfile_prefix = f'echo "FROM {self.base_container_name}" > Dockerfile.tmp; '
 
         # Replace FROM with layer before.
-        command = f'{dockerfile_prefix}' \
+        command = f'echo "FROM {self.base_container_name}" > Dockerfile.tmp; ' \
             'sed \'/FROM /d\' Dockerfile >> Dockerfile.tmp'
-
         subprocess.run(command, shell=True, check=True, cwd=path)
 
         # Build the container.
@@ -129,21 +122,9 @@ class ContainerBuilder:
         self._set_builder()
         self.base_container_name = self.config['Base-Container']
 
-        # Perform squashing, if requested
-        if self.config['Squash'] != None:
-            squash_images = self.config['Squash']
-        else:
-            squash_images = False
-        
-        # Determine last layer
-        last_layer = self.config['Layers'][-1]
-
         for path in self.config['Layers']:
-            # Only squash when processing the last layer
-            squash = squash_images if path == last_layer else False
-            
             container_name = self._get_container_name(path)
-            self._build_container(container_name, path, squash)
+            self._build_container(container_name, path)
             self.base_container_name = container_name
 
         self._tag_container()
