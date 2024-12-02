@@ -23,7 +23,7 @@ RUN pip install pyyaml types-PyYAML \
 
 # Install embedgen
 WORKDIR /build
-RUN git clone --branch v0.1.1 https://github.com/Elektrobit/embdgen.git embdgen
+RUN git clone --branch v0.1.2 https://github.com/Elektrobit/embdgen.git embdgen
 WORKDIR /build/embdgen
 RUN pip install -e embdgen-core
 RUN pip install -e embdgen-cominit
