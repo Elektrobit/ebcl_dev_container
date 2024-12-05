@@ -9,7 +9,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 USER root
 
 # install dependencies
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt -y install \
     python3 python3-pip python3-venv libparted-dev python3-dev pkg-config \
     mtools e2fsprogs cryptsetup-bin dosfstools fakeroot fdisk udev cpio

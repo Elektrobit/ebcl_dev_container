@@ -5,7 +5,7 @@ ARG CONTAINER_USER="ebcl"
 USER root
 
 # install dependencies
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt -y install libjsoncpp-dev
 
 # Update cmake version and install required tools
