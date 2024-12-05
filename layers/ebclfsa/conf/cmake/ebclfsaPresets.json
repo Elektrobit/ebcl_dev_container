@@ -1,0 +1,22 @@
+{
+    "version": 4,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 23
+    },
+    "include": [
+        "ebclPresets.json"
+    ],
+    "configurePresets": [
+        {
+            "name": "ebclfsa-aarch64",
+            "inherits": "base",
+            "hidden": true,
+            "toolchainFile": "/build/cmake/toolchain-ebclfsa-aarch64.cmake",
+            "environment": {
+                "BUILDDIR": "/build/results/apps/$env{APP_NAME}/${presetName}/build",
+                "REALGCC": "aarch64-linux-gnu-gcc"
+            }
+        }
+    ]
+}
