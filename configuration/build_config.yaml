@@ -11,4 +11,5 @@ Layers:
   - ../layers/embdgen
   - ../layers/vscode
   - ../layers/ebclfsa
+  - ../layers/kernel
   - ../layers/squash
