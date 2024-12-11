@@ -45,12 +45,7 @@ if [ -f "$ENV" ]; then
     source $ENV
 fi
 
-if [ ! -d "/tmp/build/images" ]; then
-    bash -c "overlay_mount /build/images"
-fi
-
 source /build/venv/bin/activate
-
 
 # Run user setup
 if [ -d "/workspace/tools/user_config" ]; then
