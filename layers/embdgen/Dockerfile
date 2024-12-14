@@ -21,6 +21,8 @@ RUN pip install pyyaml types-PyYAML \
     Jinja2 types-Jinja2 \
     unix-ar zstandard
 
+USER $CONTAINER_USER
+
 # Install embedgen
 WORKDIR /build
 RUN git clone --branch v0.1.2 https://github.com/Elektrobit/embdgen.git embdgen
@@ -38,9 +40,12 @@ RUN pip install jsonpickle robotframework requests pyyaml psutil
 
 # Install EBcl build tools
 WORKDIR /build
-RUN git clone --branch v1.3.5 https://github.com/Elektrobit/ebcl_build_tools ebcl_build_tools
+RUN git clone --branch v1.3.6 https://github.com/Elektrobit/ebcl_build_tools ebcl_build_tools
 RUN pip install -e ebcl_build_tools
 
 # Prepare cache folders
 RUN mkdir -p /workspace/state/cache
 RUN mkdir -p /workspace/state/apt
+RUN mkdir -p /workspace/state/debootstrap
+
+USER root
