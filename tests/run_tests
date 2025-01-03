@@ -22,4 +22,4 @@ pip install -r ${GIT_ROOT}/requirements.txt
 
 echo "Running the tests for dev container ${VERSION}..."
 
-robot -L TRACE *.robot
+robot -v CONTAINER_VERSION:${VERSION} -L TRACE *.robot
