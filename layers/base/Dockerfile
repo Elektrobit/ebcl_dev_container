@@ -33,7 +33,8 @@ RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y \
     qemu-system-arm qemu-system-x86 \
     libc6:arm64 \
     software-properties-common ca-certificates \
-    psmisc procps
+    psmisc procps \
+    zip squashfs-tools tzdata
 
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/bin
 # add addon ppa
