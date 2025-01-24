@@ -5,7 +5,6 @@ Version: v1.4.10
 Layers:
   - ../layers/base
   - ../layers/pbuilder
-  - ../layers/rust
   - ../layers/kiwi
   - ../layers/appdev
   - ../layers/build_tools
