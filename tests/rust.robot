@@ -9,10 +9,12 @@ Keyword Tags    rust
 
 SDK shall provide rustc
     [Tags]    fast
+    Skip    rust support removed
     Rustc Is Available
 
 SDK shall provide cargo
     [Tags]    fast
+    Skip    rust support removed
     Cargo Is Available
 
 *** Keywords ***
