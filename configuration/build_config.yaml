@@ -4,6 +4,7 @@ Base-Container: ubuntu:22.04
 Version: v1.4.10
 Layers:
   - ../layers/base
+  - ../layers/yocto
   - ../layers/pbuilder
   - ../layers/kiwi
   - ../layers/appdev
