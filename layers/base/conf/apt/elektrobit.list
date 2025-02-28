@@ -1,7 +1,3 @@
-deb  https://linux.elektrobit.com/eb-corbos-linux/1.5/ ebcl prod dev
+deb  https://linux.elektrobit.com/eb-corbos-linux/2.0/ ebcl prod dev
 
-deb-src  https://linux.elektrobit.com/eb-corbos-linux/1.5/ ebcl prod dev
-
-deb [arch=arm64]  https://linux.elektrobit.com/eb-corbos-linux/1.5/ ebcl_nxp_public nxp_public
-
-deb-src [arch=arm64]  https://linux.elektrobit.com/eb-corbos-linux/1.5/ ebcl_nxp_public nxp_public
+deb-src  https://linux.elektrobit.com/eb-corbos-linux/2.0/ ebcl prod dev
