@@ -4,6 +4,7 @@ ARG CONTAINER_USER="ebcl"
 ARG HOST_USER=1000
 ARG HOST_GROUP=1000
 ARG VERSION="unknown"
+ARG VERSION_PACKAGES
 
 # Config apt sources
 RUN rm -rf /etc/apt/sources.list
@@ -16,6 +17,8 @@ COPY conf/apt-keys/elektrobit.gpg /etc/apt/trusted.gpg.d/
 # Copy linux.elektrobit.com repo config
 RUN mkdir -p /etc/apt/sources.list.d
 COPY conf/apt/elektrobit.list /etc/apt/sources.list.d/
+RUN sed -i "s/VERSION/${VERSION_PACKAGES}/g" /etc/apt/sources.list.d/elektrobit.list
+RUN cat /etc/apt/sources.list.d/elektrobit.list
 
 # add arm64 arch for cross-building
 RUN dpkg --add-architecture arm64

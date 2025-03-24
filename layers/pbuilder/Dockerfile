@@ -1,6 +1,7 @@
 FROM ubuntu:latest
 
 ARG CONTAINER_USER="ebcl"
+ARG VERSION_PACKAGES
 
 # "Activate" Python env
 ENV VIRTUAL_ENV=/build/venv
@@ -15,6 +16,7 @@ RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y \
 # Setup pbuilder
 COPY conf/pbuilder/pbuilderrc /home/ebcl/.pbuilderrc
 RUN sudo chown ebcl:ebcl /home/ebcl/.pbuilderrc && chmod +x /home/ebcl/.pbuilderrc
+RUN sed -i "s/VERSION/${VERSION_PACKAGES}/g" /home/ebcl/.pbuilderrc
 
 RUN mkdir -p /home/ebcl/.pbuilder/hooks/
 COPY conf/pbuilder/G99apt_arch /home/ebcl/.pbuilder/hooks/G99apt_arch

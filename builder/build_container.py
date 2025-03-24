@@ -25,6 +25,7 @@ class ContainerBuilder:
         self.uid = None
         self.gid = None
         self.version = 'unknown'
+        self.version_packages = '1.5'
 
     def load_config(self, file: Optional[str]) -> None:
         """ Load container configuration from config file.
@@ -75,6 +76,7 @@ class ContainerBuilder:
             f'--build-arg HOST_GROUP="{gid}" '\
             f'--build-arg TIMESTAMP="{time.time()}" '\
             f'--build-arg VERSION="{self.version}" '\
+            f'--build-arg VERSION_PACKAGES="{self.version_packages}" '\
             f'.'
         logging.debug('Command: %s', command)
         subprocess.run(command, shell=True, check=True, cwd=path)
