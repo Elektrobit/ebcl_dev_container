@@ -1,7 +1,7 @@
 Base-Name: ebcl_dev_container
 Repository: ghcr.io/elektrobit
 Base-Container: ubuntu:22.04
-Version: v1.5.0
+Version: v1.5.1
 Version_packages: 1.5
 Layers:
   - ../layers/base
