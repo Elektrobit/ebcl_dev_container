@@ -40,7 +40,7 @@ RUN pip install jsonpickle robotframework requests pyyaml psutil
 
 # Install EBcl build tools
 WORKDIR /build
-RUN git clone --branch v1.3.13 https://github.com/Elektrobit/ebcl_build_tools ebcl_build_tools
+RUN git clone --branch v1.3.14 https://github.com/Elektrobit/ebcl_build_tools ebcl_build_tools
 RUN pip install -e ebcl_build_tools
 
 # Prepare cache folders
