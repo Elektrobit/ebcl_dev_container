@@ -1,0 +1,1 @@
+eval "$(task --completion bash)"
