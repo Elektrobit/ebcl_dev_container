@@ -27,17 +27,48 @@ RUN dpkg --add-architecture arm64
 RUN apt update
 # Install compiler and base tools
 RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y \
-    build-essential gcc g++ cmake pkg-config gdb-multiarch \
-    gcc-aarch64-linux-gnu g++-aarch64-linux-gnu crossbuild-essential-arm64 \
-    locales kmod curl wget xz-utils sudo git vim rsync file \
-    python3 python3-pip python3-venv \
-    lshw gdisk fdisk parted fakechroot fakeroot bmap-tools \ 
-    tcpdump iputils-ping iproute2 iptables \
-    qemu-system-arm qemu-system-x86 \
+    bmap-tools \ 
+    build-essential \
+    ca-certificates \
+    cmake \
+    crossbuild-essential-arm64 \
+    curl \
+    fakechroot \
+    fakeroot \
+    fdisk \
+    file \
+    g++ \
+    g++-aarch64-linux-gnu \
+    gcc \
+    gcc-aarch64-linux-gnu \
+    gdb-multiarch \
+    gdisk \
+    git \
+    iproute2 \
+    iptables \
+    iputils-ping \
+    kmod \
     libc6:arm64 \
-    software-properties-common ca-certificates \
+    locales \
+    lshw \
+    parted \
+    pkg-config \
     psmisc procps \
-    zip squashfs-tools tzdata
+    python3 \
+    python3-pip \
+    python3-venv \
+    qemu-system-arm \
+    qemu-system-x86 \
+    rsync \
+    software-properties-common \
+    squashfs-tools \
+    sudo \
+    tcpdump \
+    tzdata \
+    vim \
+    wget \
+    xz-utils \
+    zip
 
 RUN sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/bin
 # add addon ppa
