@@ -27,6 +27,7 @@ RUN dpkg --add-architecture arm64
 RUN apt update
 # Install compiler and base tools
 RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt install -y \
+    bash-completion \
     bmap-tools \ 
     build-essential \
     ca-certificates \
