@@ -114,6 +114,9 @@ COPY conf/bash/bashrc /root/.bashrc
 RUN chown -R root:root /root && \
     chmod +x /root/.bashrc
 
+# Copy profile (task bash completion)
+COPY conf/profile.d/task-completion.sh /etc/profile.d
+
 # Copy environment helper scripts
 COPY scripts/bash/* /build/bin/
 
