@@ -1,0 +1,25 @@
+From f25e7c0b69d2f48c1ac548b1de5223a7752eb819 Mon Sep 17 00:00:00 2001
+From: Victor Diaconu <victor.diaconu@aox.de>
+Date: Tue, 20 May 2025 07:16:21 +0000
+Subject: [PATCH] llvm: enable by default musl libc
+
+---
+ libcxx/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libcxx/CMakeLists.txt b/libcxx/CMakeLists.txt
+index d392e95077ac..cc436082caeb 100644
+--- a/libcxx/CMakeLists.txt
++++ b/libcxx/CMakeLists.txt
+@@ -295,7 +295,7 @@ option(LIBCXX_ENABLE_THREADS "Build libc++ with support for threads." ON)
+ option(LIBCXX_ENABLE_MONOTONIC_CLOCK
+   "Build libc++ with support for a monotonic clock.
+    This option may only be set to OFF when LIBCXX_ENABLE_THREADS=OFF." ON)
+-option(LIBCXX_HAS_MUSL_LIBC "Build libc++ with support for the Musl C library" OFF)
++option(LIBCXX_HAS_MUSL_LIBC "Build libc++ with support for the Musl C library" ON)
+ option(LIBCXX_HAS_PTHREAD_API "Ignore auto-detection and force use of pthread API" OFF)
+ option(LIBCXX_HAS_WIN32_THREAD_API "Ignore auto-detection and force use of win32 thread API" OFF)
+ option(LIBCXX_HAS_EXTERNAL_THREAD_API
+-- 
+2.34.1
+
