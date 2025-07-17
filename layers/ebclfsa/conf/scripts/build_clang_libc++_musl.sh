@@ -104,9 +104,10 @@
 #!/bin/bash
 set -ex
 
+export LLVM_SYMBOLIZER_PATH=/usr/lib/llvm-18/bin/llvm-symbolizer
+
 # Variables
 PROC_NR=2
-#WORK_DIR="/home/victor/emb-linux/lnx5-sdk"
 WORK_DIR="/build"
 BUILD_TOOL="ninja"
 
