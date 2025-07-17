@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     lisa-elf-enabler \
     lld \
     patchelf \
-    ninja-build
+    ninja-build \
+    llvm-18-tools
 
 # add cmake toolchains
 RUN mkdir -p /build/cmake
@@ -44,5 +45,6 @@ RUN rm /build/build_clang_libc++_musl.sh \
 
 RUN apt remove -y \
     ninja-build \
-    patchelf
+    patchelf \
+    llvm-18-tools
 
