@@ -8,6 +8,8 @@ USER root
 
 COPY conf/apt/ebclfsa.list /etc/apt/sources.list.d/
 # Install ebclfsa tools
+RUN curl -fsSL https://apt.llvm.org/llvm-snapshot.gpg.key |  gpg --dearmor -o /usr/share/keyrings/llvm.gpg
+RUN echo "deb [signed-by=/usr/share/keyrings/llvm.gpg] http://apt.llvm.org/focal/ llvm-toolchain-focal-18 main" | sudo tee /etc/apt/sources.list.d/llvm.list
 RUN apt-get update && apt-get install -y --no-install-recommends \
     lisa-elf-enabler \
     lld \
