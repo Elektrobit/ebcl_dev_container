@@ -1,0 +1,20 @@
+From a5ce7cba38be9f0c9e305109532ff09cc7760d64 Mon Sep 17 00:00:00 2001
+From: Elektrobit <inquiries@elektrobit.com>
+Date: Thu, 22 May 2025 11:45:46 +0000
+Subject: [PATCH] musl-cross: add linux 5.15.183 hash
+
+---
+ hashes/linux-5.15.183.tar.xz.sha1 | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 hashes/linux-5.15.183.tar.xz.sha1
+
+diff --git a/hashes/linux-5.15.183.tar.xz.sha1 b/hashes/linux-5.15.183.tar.xz.sha1
+new file mode 100644
+index 0000000..77fe25c
+--- /dev/null
++++ b/hashes/linux-5.15.183.tar.xz.sha1
+@@ -0,0 +1 @@
++d9a01720c4a11d4adcc41bd12745cfc32e477be9  linux-5.15.183.tar.xz
+-- 
+2.34.1
+
