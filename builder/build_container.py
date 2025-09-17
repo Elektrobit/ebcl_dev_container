@@ -43,6 +43,7 @@ class ContainerBuilder:
         
         if self.config:
             self.version = self.config.get('Version', 'unknown')
+            self.version_packages = self.config.get('Version_packages', 'unknown')
 
     def _set_builder(self) -> None:
         """ Get the build tool form the environment. """
