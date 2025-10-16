@@ -7,6 +7,7 @@ Layers:
   - ../layers/base
   - ../layers/yocto
   - ../layers/pbuilder
+  - ../layers/kiwi
   - ../layers/appdev
   - ../layers/build_tools
   - ../layers/vscode
