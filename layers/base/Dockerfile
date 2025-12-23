@@ -143,7 +143,9 @@ ENV VIRTUAL_ENV=/build/venv
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-RUN pip install mypy pep8 pylint pytest pytest-cov robotframework
+COPY requirements.txt /tmp/requirements.txt
+
+RUN pip install -r /tmp/requirements.txt
 
 # Ensure venv owner
 USER root
