@@ -18,3 +18,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # add cmake toolchains
 RUN mkdir -p /build/cmake
 COPY conf/cmake/* /build/cmake/
+
+COPY conf/deb-pkg/clang20-musl-libcpp_1.0.0-1_arm64.deb.part_* ./
+RUN cat ./clang20-musl-libcpp_1.0.0-1_arm64.deb.part_* > clang20-musl-libcpp_1.0.0-1_arm64.deb
+RUN dpkg -i ./clang20-musl-libcpp_1.0.0-1_arm64.deb
+RUN rm ./clang20-musl-libcpp_1.0.0-1_arm64.deb

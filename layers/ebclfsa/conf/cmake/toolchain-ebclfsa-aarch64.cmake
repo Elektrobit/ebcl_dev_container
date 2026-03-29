@@ -1,25 +1,29 @@
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_PROCESSOR aarch64)
 
-set(CMAKE_C_COMPILER clang)
-set(CMAKE_CXX_COMPILER clang++)
+set(MUSL_SYSROOT_PATH /usr/aarch64-linux-musl)
+set(CLANG_ROOT_PATH /usr/aarch64_clang_musl/usr/local)
 
-set(CMAKE_SYSROOT /build/sysroot_hi_aarch64)
+set(LOC_TARGET aarch64-linux-musl)
+set(CLANG_LIBS_1 ${CLANG_ROOT_PATH}/lib)
+set(CLANG_LIBS_2 ${CLANG_ROOT_PATH}/lib/${LOC_TARGET})
+set(MUSL_INCLUDE ${SYSROOT_PATH}/${LOC_TARGET}/include)
+set(CLANG_INCLUDE_1 ${CLANG_ROOT_PATH}/include/c++/v1)
+set(CLANG_INCLUDE_2 ${CLANG_ROOT_PATH}/include/aarch64-unknown-linux-musl/c++/v1)
 
-set(GCC_LIBS /usr/lib/gcc-cross/aarch64-linux-gnu/11)
-set(MUSL_LIBS /usr/lib/aarch64-linux-musl)
-set(MUSL_INCLUDE /usr/include/aarch64-linux-musl)
+set(CMAKE_C_COMPILER ${CLANG_ROOT_PATH}/bin/clang)
+set(CMAKE_CXX_COMPILER ${CLANG_ROOT_PATH}/bin/clang++)
+set(CMAKE_LINKER /usr/bin/lld)
+set(CMAKE_SYSROOT ${MUSL_SYSROOT_PATH})
+set(CMAKE_FIND_ROOT_PATH ${MUSL_SYSROOT_PATH})
+
 
 # Only static binaries are allowed
 set(CMAKE_C_FLAGS "-static")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -target ${LOC_TARGET}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -isystem ${CLANG_INCLUDE_1}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -isystem ${CLANG_INCLUDE_2}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -isystem ${MUSL_INCLUDE}")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -target aarch64-linux-musl")
 
-set(CMAKE_EXE_LINKER_FLAGS "-fuse-ld=lld -nostdlib -L${MUSL_LIBS} -L ${GCC_LIBS} -lc -lgcc -lgcc_eh")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${MUSL_LIBS}/Scrt1.o ${MUSL_LIBS}/crti.o ${GCC_LIBS}/crtbeginS.o ${GCC_LIBS}/crtendS.o ${MUSL_LIBS}/crtn.o")
-
-set(CMAKE_FIND_ROOT_PATH "${CMAKE_SYSROOT}")
-set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+set(CMAKE_EXE_LINKER_FLAGS "-stdlib=libc++ -lc++ -lc++abi -lunwind -fuse-ld=lld -L${CLANG_LIBS_1} -L${CLANG_LIBS_2}")
 
